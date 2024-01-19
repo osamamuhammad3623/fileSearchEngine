@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>736</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Keyword</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="dirBtn">
+      <property name="minimumSize">
+       <size>
+        <width>130</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Select Directory</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="dir">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>N/A</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QTableWidget" name="table">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>150</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Item name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Path</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="keyword">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>200</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="title">
+       <string>Search filters</string>
+      </property>
+      <widget class="QCheckBox" name="dirName">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>181</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Directory name</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="fileName">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>181</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>File name</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="infile">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>181</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>In-file</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="caseSensitive">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>130</y>
+         <width>181</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Case-sensitive</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="recursive">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>160</y>
+         <width>181</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Recursive</string>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>30</y>
+         <width>541</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="title">
+        <string>File extension</string>
+       </property>
+       <widget class="QCheckBox" name="headerfile">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>61</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>.h</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="cPlusPlus">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>81</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>.c/cpp</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="python">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>81</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>.py</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="txt">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>120</y>
+          <width>81</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>.txt</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QPushButton" name="searchBtn">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Search</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" colspan="2">
+     <widget class="QLabel" name="status">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
