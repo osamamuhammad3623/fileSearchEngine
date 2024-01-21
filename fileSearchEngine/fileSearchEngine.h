@@ -1,37 +1,45 @@
 #include <string>
 #include <vector>
+#include "engineDefinitions.h"
+#include <iostream>
+#include <experimental/filesystem>
+
+namespace fs = std::experimental::filesystem;
 using namespace std;
 
-#ifndef FileSearchEngine_H
-#define FileSearchEngine_H
-
-struct SearchFilters{
-    bool dirName = false;
-    bool fileName = false;
-    bool infile = false;
-    bool caseSensitive = false;
-    bool recursive = false;
-
-    // file extensions
-    bool header = false;
-    bool cPlusPlus = false;
-    bool py = false;
-    bool txt = false;
-
-};
-
+#ifndef FILESEARCHENGINE
+#define FILESEARCHENGINE
 
 
 class FileSearchEngine{
-
-public:
+private:
     string keyword;
     string dirPath;
     string status;
-    SearchFilters configs;
+    EngineSearchFilters filters;
     vector<pair<string,string>> result;
 
+
+public:
+    void setKeyword(string newKeyword);
+    string getKeyword(void);
+
+    void setDirPath(string newDirPath);
+    string getDirPath(void);
+
+    string getStatus(void);
+
+    void setFilters(EngineSearchFilters newFilters);
+
+    vector<pair<string,string>> getResult(void);
+
     void search(void);
+
+    EntryType getEntryType(string path);
+
+    bool findKeyword(string data);
+
+    string readFile(string path);
 };
 
-#endif /*FileSearchEngine_H*/
+#endif /*FILESEARCHENGINE*/
