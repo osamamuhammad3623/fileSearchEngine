@@ -3,7 +3,8 @@
 
 typedef enum{
     EntryType_File,
-    EntryType_Dir
+    EntryType_Dir,
+    EntryType_Invalid
 }EntryType;
 
 typedef struct{
@@ -19,5 +20,12 @@ typedef struct{
     bool python= false;
     bool txt= false;
 }EngineSearchFilters;
+
+typedef enum{
+    Status_OK = 0,
+    Status_NOK = 1,
+    Status_Search_Completed
+}Status;
+
 
 #endif // ENGINEDEFINITIONS_H

@@ -2,6 +2,8 @@
 #include <vector>
 #include "engineDefinitions.h"
 #include <iostream>
+#include <fstream>
+#include <cctype>
 #include <experimental/filesystem>
 
 namespace fs = std::experimental::filesystem;
@@ -15,7 +17,7 @@ class FileSearchEngine{
 private:
     string keyword;
     string dirPath;
-    string status;
+    Status status;
     EngineSearchFilters filters;
     vector<pair<string,string>> result;
 
@@ -27,7 +29,7 @@ public:
     void setDirPath(string newDirPath);
     string getDirPath(void);
 
-    string getStatus(void);
+    Status getStatus(void);
 
     void setFilters(EngineSearchFilters newFilters);
 
@@ -40,6 +42,8 @@ public:
     bool findKeyword(string data);
 
     string readFile(string path);
+
+    string toLowerCase(string str);
 };
 
 #endif /*FILESEARCHENGINE*/
