@@ -1,0 +1,37 @@
+
+
+
+if status is OK
+
+    if recursive search is checked
+        get all content of the given directory & all sub-directories
+    else
+        get all content of the given directory
+
+        
+
+    loop through each entry
+
+        if entry is directory & directoryName search is checked
+                search.
+        
+        if entry is file
+            if fileName search is checked
+                search
+
+            if in-file search is checked
+                open & search
+
+            if extension is .h & .h extension is checked
+                search
+
+            if extension is .c/cpp & .c/cpp extension is checked
+                search
+
+            if extension is .py & .py extension is checked
+                search
+
+            if extension is .txt & .txt extension is checked
+                search
+    
+    status is marked as completed
