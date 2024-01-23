@@ -95,6 +95,11 @@
       </column>
       <column>
        <property name="text">
+        <string>Filter type</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
         <string>Path</string>
        </property>
       </column>

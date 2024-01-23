@@ -20,7 +20,7 @@ private:
     string dirPath{""};
     Status status{};
     EngineSearchFilters filters;
-    vector<pair<string,string>> result;
+    vector<tuple<string,string,string>> result;
 
     bool keywordFlag=0;
     bool dirPathFlag=0;
@@ -37,7 +37,7 @@ public:
 
     void setFilters(EngineSearchFilters newFilters);
 
-    vector<pair<string,string>> getResult(void);
+    vector<tuple<string,string,string>> getResult(void);
 
     void search(void);
 

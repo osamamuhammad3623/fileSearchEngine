@@ -52,10 +52,10 @@ void FileSearchEngine::setFilters(EngineSearchFilters newFilters){
 
 }
 
-vector<pair<string,string>> FileSearchEngine::getResult(void){
-    sort(result.begin(), result.end());
-    auto last_it = unique(result.begin(), result.end());
-    result.erase(last_it, result.end());
+vector<tuple<string,string,string>> FileSearchEngine::getResult(void){
+//    sort(result.begin(), result.end());
+//    auto last_it = unique(result.begin(), result.end());
+//    result.erase(last_it, result.end());
     return result;
 }
 
@@ -83,47 +83,47 @@ void FileSearchEngine::search(void){
             if((fs::is_directory(entry) == 1) && (filters.directoryName == 1)){
 
                 if(findKeyword(entryFilename)){
-                    result.push_back(make_pair(entryFilename, entryPath));
+                    result.push_back(make_tuple(entryFilename, "Directory name",entryPath));
                 }
 
             }else if (fs::is_regular_file(entry) == 1){
 
                 if(filters.fileName == 1){
                     if(findKeyword(entryFilename)){
-                        result.push_back(make_pair(entryFilename, entryPath));
+                        result.push_back(make_tuple(entryFilename, "File name",entryPath));
                     }
                 }
 
                 if(filters.infile == 1){
                     string data = readFile(entryPath);
                     if(findKeyword(data)){
-                        result.push_back(make_pair(entryFilename, entryPath));
+                        result.push_back(make_tuple(entryFilename, "In-file search",entryPath));
                     }
                 }
 
                 if((filters.headerfile == 1)  && (entryExtension == ".h")){
                     if(findKeyword(entryFilename)){
-                        result.push_back(make_pair(entryFilename, entryPath));
+                        result.push_back(make_tuple(entryFilename, ".h extension",entryPath));
                     }
                 }
 
                 if((filters.cPlusPlus == 1)   && ((entryExtension == ".cpp") || (entryExtension == ".c"))){
                     if(findKeyword(entryFilename)){
-                        result.push_back(make_pair(entryFilename, entryPath));
+                        result.push_back(make_tuple(entryFilename, ".c/cpp extension",entryPath));
                     }
 
                 }
 
                 if((filters.python == 1) && (entryExtension == ".py")){
                     if(findKeyword(entryFilename)){
-                        result.push_back(make_pair(entryFilename, entryPath));
+                        result.push_back(make_tuple(entryFilename,".py extension", entryPath));
                     }
 
                 }
 
                 if((filters.txt == 1) && (entryExtension == ".txt")){
                     if(findKeyword(entryFilename)){
-                        result.push_back(make_pair(entryFilename, entryPath));
+                        result.push_back(make_tuple(entryFilename, ".txt extension",entryPath));
                     }
                 }
 

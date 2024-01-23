@@ -128,14 +128,16 @@ void MainWindow::on_searchBtn_clicked()
         engine.search();
 
         if(engine.getStatus() == Status_Search_Completed){
-            vector<pair<string,string>> outputResult = engine.getResult();
+            vector<tuple<string,string,string>> outputResult = engine.getResult();
 
             auto model = ui->table->model();
             ui->table->setRowCount(engine.getResult().size());
 
             for(int index = 0; index < engine.getResult().size(); index++){
-                model->setData(model->index(index,0), QString::fromStdString(outputResult[index].first));
-                model->setData(model->index(index,1), QString::fromStdString(outputResult[index].second));
+                model->setData(model->index(index,0), QString::fromStdString(get<0>(outputResult[index])));
+                model->setData(model->index(index,1), QString::fromStdString(get<1>(outputResult[index])));
+                model->setData(model->index(index,2), QString::fromStdString(get<2>(outputResult[index])));
+
             }
 
             ui->status->setText("Search completed successfully");
