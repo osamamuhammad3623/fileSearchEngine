@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <cctype>
+#include <algorithm>
 #include <experimental/filesystem>
 
 namespace fs = std::experimental::filesystem;
@@ -15,12 +16,15 @@ using namespace std;
 
 class FileSearchEngine{
 private:
-    string keyword;
-    string dirPath;
-    Status status;
+    string keyword{""};
+    string dirPath{""};
+    Status status{};
     EngineSearchFilters filters;
     vector<pair<string,string>> result;
 
+    bool keywordFlag=0;
+    bool dirPathFlag=0;
+    bool filtersFlag=0;
 
 public:
     void setKeyword(string newKeyword);

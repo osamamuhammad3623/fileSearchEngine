@@ -3,10 +3,10 @@
 
 void FileSearchEngine::setKeyword(string newKeyword){
     if(newKeyword.empty() || (newKeyword.size() == 1) ){
-        status = Status_NOK;
+        keywordFlag = Status_NOK;
     }else{
         keyword = newKeyword;
-        status = (Status) (status | Status_OK);
+        keywordFlag = Status_OK;
     }
 }
 
@@ -17,9 +17,9 @@ string FileSearchEngine::getKeyword(void){
 void FileSearchEngine::setDirPath(string newDirPath){
     if(getEntryType(newDirPath) == EntryType_Dir){
         dirPath = newDirPath;
-        status = (Status) (status | Status_OK);
+        dirPathFlag = Status_OK;
     }else{
-        status = Status_NOK;
+        dirPathFlag = Status_NOK;
     }
 }
 
@@ -45,21 +45,26 @@ void FileSearchEngine::setFilters(EngineSearchFilters newFilters){
 
     if(flag > 0){
         filters = newFilters;
-        status = (Status) (status | Status_OK);
+        filtersFlag = Status_OK;
     }else{
-        status = Status_NOK;
+        filtersFlag = Status_NOK;
     }
 
 }
 
 vector<pair<string,string>> FileSearchEngine::getResult(void){
+    sort(result.begin(), result.end());
+    auto last_it = unique(result.begin(), result.end());
+    result.erase(last_it, result.end());
     return result;
 }
 
 void FileSearchEngine::search(void){
-    if(status == Status_OK){
+    int flags = keywordFlag + dirPathFlag + filtersFlag;
 
-        vector<fs::directory_entry> content;
+    if(flags == 0){
+        result.clear();
+        vector<fs::directory_entry> content{};
         if(filters.recursive == 1){
             for(auto entry: fs::recursive_directory_iterator(dirPath)){
                 content.push_back(entry);
@@ -70,59 +75,64 @@ void FileSearchEngine::search(void){
             }
         }
 
-        for(auto entry: content){
+        for(auto &entry: content){
+            string entryFilename = entry.path().filename().u8string();
+            string entryPath= entry.path().u8string();
+            string entryExtension = entry.path().extension().u8string();
 
             if((fs::is_directory(entry) == 1) && (filters.directoryName == 1)){
 
-                if(findKeyword(entry.path().filename().u8string())){
-                    result.push_back(make_pair(entry.path().filename().u8string(), entry.path().u8string()));
+                if(findKeyword(entryFilename)){
+                    result.push_back(make_pair(entryFilename, entryPath));
                 }
 
             }else if (fs::is_regular_file(entry) == 1){
 
                 if(filters.fileName == 1){
-                    if(findKeyword(entry.path().filename().u8string())){
-                        result.push_back(make_pair(entry.path().filename().u8string(), entry.path().u8string()));
+                    if(findKeyword(entryFilename)){
+                        result.push_back(make_pair(entryFilename, entryPath));
                     }
                 }
 
                 if(filters.infile == 1){
-                    string data = readFile(entry.path().u8string());
+                    string data = readFile(entryPath);
                     if(findKeyword(data)){
-                        result.push_back(make_pair(entry.path().filename().u8string(), entry.path().u8string()));
+                        result.push_back(make_pair(entryFilename, entryPath));
                     }
                 }
 
-                if((filters.headerfile == 1)  && (entry.path().extension() == ".h")){
-                    if(findKeyword(entry.path().filename().u8string())){
-                        result.push_back(make_pair(entry.path().filename().u8string(), entry.path().u8string()));
+                if((filters.headerfile == 1)  && (entryExtension == ".h")){
+                    if(findKeyword(entryFilename)){
+                        result.push_back(make_pair(entryFilename, entryPath));
                     }
                 }
 
-                if((filters.cPlusPlus == 1)   && ((entry.path().extension() == ".cpp") || (entry.path().extension() == ".c"))){
-                    if(findKeyword(entry.path().filename().u8string())){
-                        result.push_back(make_pair(entry.path().filename().u8string(), entry.path().u8string()));
-                    }
-
-                }
-
-                if((filters.python == 1) && (entry.path().extension() == ".py")){
-                    if(findKeyword(entry.path().filename().u8string())){
-                        result.push_back(make_pair(entry.path().filename().u8string(), entry.path().u8string()));
+                if((filters.cPlusPlus == 1)   && ((entryExtension == ".cpp") || (entryExtension == ".c"))){
+                    if(findKeyword(entryFilename)){
+                        result.push_back(make_pair(entryFilename, entryPath));
                     }
 
                 }
 
-                if((filters.txt == 1) && (entry.path().extension() == ".txt")){
-                    if(findKeyword(entry.path().filename().u8string())){
-                        result.push_back(make_pair(entry.path().filename().u8string(), entry.path().u8string()));
+                if((filters.python == 1) && (entryExtension == ".py")){
+                    if(findKeyword(entryFilename)){
+                        result.push_back(make_pair(entryFilename, entryPath));
+                    }
+
+                }
+
+                if((filters.txt == 1) && (entryExtension == ".txt")){
+                    if(findKeyword(entryFilename)){
+                        result.push_back(make_pair(entryFilename, entryPath));
                     }
                 }
 
             }
         }
-
         status = Status_Search_Completed;
+
+    }else{
+        status = Status_NOK;
     }
 }
 

@@ -76,6 +76,12 @@
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>150</number>
       </attribute>
@@ -199,7 +205,7 @@
       </widget>
       <widget class="QCheckBox" name="recursive">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
