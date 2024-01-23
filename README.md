@@ -15,8 +15,8 @@ Supported file extensions:
 ## Framework
 - Qt 5 with C++17
 
-## UI
-![UI design](screenshot.png)
-
 ## Project walkthrough playlist on YouTube [AR]
 https://youtube.com/playlist?list=PL7u1Nrc5ibNJeQQ8Eb7L2vqT5iCRbW8K-&si=Nec7CPFVi_OHkydx
+
+## UI
+![UI design](screenshot.png)
