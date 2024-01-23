@@ -20,3 +20,7 @@ https://youtube.com/playlist?list=PL7u1Nrc5ibNJeQQ8Eb7L2vqT5iCRbW8K-&si=Nec7CPFV
 
 ## UI
 ![UI design](screenshot.png)
+
+## Future work
+- Add filters to exclude specific file-extensions
+- Add filters to exclude specific sub-folders
