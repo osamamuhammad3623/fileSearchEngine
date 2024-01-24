@@ -38,10 +38,16 @@ void FileSearchEngine::setFilters(EngineSearchFilters newFilters){
             newFilters.infile +
             newFilters.caseSensitive +
             newFilters.recursive +
+
             newFilters.headerfile +
             newFilters.cPlusPlus +
             newFilters.python +
-            newFilters.txt;
+            newFilters.txt +
+
+            newFilters.exc_headerfile +
+            newFilters.exc_cPlusPlus +
+            newFilters.exc_python +
+            newFilters.exc_txt;
 
     if(flag > 0){
         filters = newFilters;
@@ -74,6 +80,8 @@ void FileSearchEngine::search(void){
                 content.push_back(entry);
             }
         }
+
+        excludeEntries(content);
 
         for(auto &entry: content){
             string entryFilename = entry.path().filename().u8string();
@@ -155,6 +163,38 @@ string FileSearchEngine::toLowerCase(string str){
     }
 
     return result;
+}
+
+void FileSearchEngine::excludeEntries(vector<fs::directory_entry> &entries)
+{
+    int toErase=0;
+    int entriesSize = entries.size();
+    for(int i =0; i< entriesSize -1;i++){
+        string extension = entries[i].path().extension().u8string();
+        if((extension == ".h")  && (filters.exc_headerfile == 1)){
+            entries[i] = entries[entriesSize-1 -toErase];
+            toErase++;
+        }
+
+        else if(((extension == ".c") || (extension == ".cpp")) && (filters.exc_cPlusPlus== 1)){
+            entries[i] = entries[entriesSize-1 -toErase];
+            toErase++;
+        }
+
+        else if((extension == ".py")  && (filters.exc_python== 1)){
+            entries[i] = entries[entriesSize-1 -toErase];
+            toErase++;
+        }
+
+        else if((extension == ".txt")  && (filters.exc_txt== 1)){
+            entries[i] = entries[entriesSize-1 -toErase];
+            toErase++;
+        }
+    }
+
+    vector<fs::directory_entry>::iterator iter = entries.begin() + (entriesSize-1 - toErase);
+
+    entries.erase(iter, entries.end());
 }
 
 bool FileSearchEngine::findKeyword(string data){
