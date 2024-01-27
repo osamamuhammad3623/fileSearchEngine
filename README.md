@@ -6,7 +6,7 @@ Search for a keyword in:
 - File names
 - In-file text
 
-Supported file extensions:
+You can include/exclude specific file-extensions in/from searching, supported file extensions:
 - headerfiles (.h)
 - C/C++ files (.c/cpp)
 - Python files (.py)
@@ -22,5 +22,5 @@ https://youtube.com/playlist?list=PL7u1Nrc5ibNJeQQ8Eb7L2vqT5iCRbW8K-&si=Nec7CPFV
 ![UI design](screenshot.png)
 
 ## Future work
-- Add filters to exclude specific file-extensions
+- Add filters to exclude specific file-extensions [DONE]
 - Add filters to exclude specific sub-folders
