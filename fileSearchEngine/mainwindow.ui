@@ -234,7 +234,7 @@
         <rect>
          <x>210</x>
          <y>30</y>
-         <width>541</width>
+         <width>181</width>
          <height>151</height>
         </rect>
        </property>
@@ -301,6 +301,96 @@
         </property>
        </widget>
        <widget class="QCheckBox" name="txt">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>120</y>
+          <width>81</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>.txt</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>30</y>
+         <width>181</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="title">
+        <string>Exclude File extension</string>
+       </property>
+       <widget class="QCheckBox" name="exc_headerfile">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>61</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>.h</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="exc_cPlusPlus">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>81</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>.c/cpp</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="exc_python">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>81</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>.py</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="exc_txt">
         <property name="geometry">
          <rect>
           <x>10</x>

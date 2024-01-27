@@ -19,6 +19,13 @@ typedef struct{
     bool cPlusPlus= false;
     bool python= false;
     bool txt= false;
+
+    /* Excluded File Extensions */
+    bool exc_headerfile= false;
+    bool exc_cPlusPlus= false;
+    bool exc_python= false;
+    bool exc_txt= false;
+
 }EngineSearchFilters;
 
 typedef enum{

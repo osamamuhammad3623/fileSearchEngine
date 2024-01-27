@@ -121,7 +121,10 @@ void MainWindow::on_txt_stateChanged(int arg1)
 
 void MainWindow::on_searchBtn_clicked()
 {
-    if(engine.getDirPath() != ""){
+
+
+
+    if((engine.getDirPath() != "") && checkIncludeExcludeContradiction()){
         engine.setKeyword(ui->keyword->text().toStdString());
         engine.setFilters(userFilters);
 
@@ -145,6 +148,67 @@ void MainWindow::on_searchBtn_clicked()
         }else{
             ui->status->setText("Search not completed successfully");
         }
+
+    }else{
+        ui->status->setText("Invalid inputs!");
     }
 }
 
+
+void MainWindow::on_exc_headerfile_stateChanged(int arg1)
+{
+    if(ui->exc_headerfile->isChecked()){
+        userFilters.exc_headerfile = 1;
+    }else{
+        userFilters.exc_headerfile = 0;
+    }
+}
+
+
+void MainWindow::on_exc_cPlusPlus_stateChanged(int arg1)
+{
+    if(ui->exc_cPlusPlus->isChecked()){
+        userFilters.exc_cPlusPlus= 1;
+    }else{
+        userFilters.exc_cPlusPlus = 0;
+    }
+}
+
+
+void MainWindow::on_exc_python_stateChanged(int arg1)
+{
+    if(ui->exc_python->isChecked()){
+        userFilters.exc_python= 1;
+    }else{
+        userFilters.exc_python= 0;
+    }
+}
+
+
+void MainWindow::on_exc_txt_stateChanged(int arg1)
+{
+    if(ui->exc_txt->isChecked()){
+        userFilters.exc_txt= 1;
+    }else{
+        userFilters.exc_txt= 0;
+    }
+}
+
+bool MainWindow::checkIncludeExcludeContradiction()
+{
+    bool res = true;
+    if(ui->headerfile->isChecked() && ui->exc_headerfile->isChecked()){
+        res = false;
+
+    }else if(ui->cPlusPlus->isChecked() && ui->exc_cPlusPlus->isChecked()){
+        res = false;
+
+    }else if(ui->python->isChecked() && ui->exc_python->isChecked()){
+        res = false;
+
+    }else if(ui->txt->isChecked() && ui->exc_txt->isChecked()){
+        res = false;
+    }
+
+    return res;
+}

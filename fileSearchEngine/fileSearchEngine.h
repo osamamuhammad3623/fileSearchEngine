@@ -48,6 +48,8 @@ public:
     string readFile(string path);
 
     string toLowerCase(string str);
+
+    void excludeEntries(vector<fs::directory_entry>& entries);
 };
 
 #endif /*FILESEARCHENGINE*/
