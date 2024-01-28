@@ -8,6 +8,8 @@ typedef enum{
 }EntryType;
 
 typedef struct{
+    bool regex_enabled= false;
+
     bool directoryName= false;
     bool fileName= false;
     bool infile= false;

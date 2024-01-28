@@ -33,7 +33,7 @@ Status FileSearchEngine::getStatus(void){
 
 void FileSearchEngine::setFilters(EngineSearchFilters newFilters){
     int flag=0;
-    flag += newFilters.directoryName +
+    flag = newFilters.directoryName +
             newFilters.fileName +
             newFilters.infile +
             newFilters.caseSensitive +
@@ -47,7 +47,9 @@ void FileSearchEngine::setFilters(EngineSearchFilters newFilters){
             newFilters.exc_headerfile +
             newFilters.exc_cPlusPlus +
             newFilters.exc_python +
-            newFilters.exc_txt;
+            newFilters.exc_txt +
+
+            newFilters.regex_enabled;
 
     if(flag > 0){
         filters = newFilters;
@@ -68,7 +70,7 @@ vector<tuple<string,string,string>> FileSearchEngine::getResult(void){
 void FileSearchEngine::search(void){
     int flags = keywordFlag + dirPathFlag + filtersFlag;
 
-    if(flags == 0){
+    if(flags == 0 && (validateRegex() == filters.regex_enabled)){
         result.clear();
         vector<fs::directory_entry> content{};
         if(filters.recursive == 1){
@@ -197,29 +199,61 @@ void FileSearchEngine::excludeEntries(vector<fs::directory_entry> &entries)
     entries.erase(iter, entries.end());
 }
 
-bool FileSearchEngine::findKeyword(string data){
-    int found=0;
-    if(filters.caseSensitive == 1){
-        found = data.find(keyword);
-        if(found != string::npos){
-            // keyword found
-            return true;
-        }else{
-            return false;
+bool FileSearchEngine::validateRegex(void)
+{
+    bool result = false;
+
+    if(filters.regex_enabled){
+
+        try {
+            basic_regex re(keyword);
         }
+        catch (const std::regex_error& ) {
+            result= false;
+        }
+            result= true;
 
     }else{
-        string loweredKeyword = toLowerCase(keyword);
-        string loweredData = toLowerCase(data);
+        result = false;
+    }
 
-        found = loweredData.find(loweredKeyword);
-        if(found != string::npos){
-            // keyword found
-            return true;
+    return result;
+}
+
+bool FileSearchEngine::findKeyword(string data){
+    bool result = false;
+    if(filters.regex_enabled == 1){
+        smatch results;
+        // Note: regex is the keyword
+        regex keywordRegex(keyword);
+        return (regex_search(data, results, keywordRegex));
+    }
+    else{
+        int found=0;
+        if(filters.caseSensitive == 1){
+            found = data.find(keyword);
+            if(found != string::npos){
+                // keyword found
+                result= true;
+            }else{
+                result= false;
+            }
+
         }else{
-            return false;
+            string loweredKeyword = toLowerCase(keyword);
+            string loweredData = toLowerCase(data);
+
+            found = loweredData.find(loweredKeyword);
+            if(found != string::npos){
+                // keyword found
+                result= true;
+            }else{
+                result= false;
+            }
         }
     }
+
+    return result;
 }
 
 string FileSearchEngine::readFile(string path){

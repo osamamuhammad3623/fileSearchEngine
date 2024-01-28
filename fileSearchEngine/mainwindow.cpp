@@ -121,12 +121,14 @@ void MainWindow::on_txt_stateChanged(int arg1)
 
 void MainWindow::on_searchBtn_clicked()
 {
-
-
-
     if((engine.getDirPath() != "") && checkIncludeExcludeContradiction()){
         engine.setKeyword(ui->keyword->text().toStdString());
         engine.setFilters(userFilters);
+
+        if((ui->en_regex->isChecked() == 1) && (engine.validateRegex() == 0)){
+            ui->status->setText("Invalid RegEx!");
+            return;
+        }
 
         engine.search();
 
@@ -212,3 +214,13 @@ bool MainWindow::checkIncludeExcludeContradiction()
 
     return res;
 }
+
+void MainWindow::on_en_regex_stateChanged(int arg1)
+{
+    if(ui->en_regex->isChecked()){
+        userFilters.regex_enabled = 1;
+    }else{
+        userFilters.regex_enabled = 0;
+    }
+}
+

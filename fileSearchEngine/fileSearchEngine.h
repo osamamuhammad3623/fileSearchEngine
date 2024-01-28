@@ -6,6 +6,7 @@
 #include <cctype>
 #include <algorithm>
 #include <experimental/filesystem>
+#include <regex>
 
 namespace fs = std::experimental::filesystem;
 using namespace std;
@@ -50,6 +51,8 @@ public:
     string toLowerCase(string str);
 
     void excludeEntries(vector<fs::directory_entry>& entries);
+
+    bool validateRegex(void);
 };
 
 #endif /*FILESEARCHENGINE*/

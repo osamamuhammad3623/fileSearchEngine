@@ -50,6 +50,8 @@ private slots:
 
     bool checkIncludeExcludeContradiction();
 
+    void on_en_regex_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     FileSearchEngine engine;
