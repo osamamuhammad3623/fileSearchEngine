@@ -12,6 +12,9 @@ You can include/exclude specific file-extensions in/from searching, supported fi
 - Python files (.py)
 - Text files (.txt)
 
+You can search using regular expressions (RegEx)
+
+
 ## Framework
 - Qt 5 with C++17
 
