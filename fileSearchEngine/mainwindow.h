@@ -30,25 +30,7 @@ private slots:
 
     void on_recursive_stateChanged(int arg1);
 
-    void on_headerfile_stateChanged(int arg1);
-
-    void on_cPlusPlus_stateChanged(int arg1);
-
-    void on_python_stateChanged(int arg1);
-
-    void on_txt_stateChanged(int arg1);
-
     void on_searchBtn_clicked();
-
-    void on_exc_headerfile_stateChanged(int arg1);
-
-    void on_exc_cPlusPlus_stateChanged(int arg1);
-
-    void on_exc_python_stateChanged(int arg1);
-
-    void on_exc_txt_stateChanged(int arg1);
-
-    bool checkIncludeExcludeContradiction();
 
     void on_en_regex_stateChanged(int arg1);
 

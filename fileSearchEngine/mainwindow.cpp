@@ -78,51 +78,30 @@ void MainWindow::on_recursive_stateChanged(int arg1)
     }
 }
 
+static vector<string> processExcludedExtensions(QString userInput){
+    vector<string> result{};
 
-void MainWindow::on_headerfile_stateChanged(int arg1)
-{
-    if(ui->headerfile->isChecked()){
-        userFilters.headerfile = 1;
-    }else{
-        userFilters.headerfile = 0;
+    userInput.replace(" ", "");
+    QStringList extensions  = userInput.split(',');
+
+    for(auto &ext : extensions){
+        result.push_back(ext.toStdString());
     }
+
+    return result;
 }
-
-
-void MainWindow::on_cPlusPlus_stateChanged(int arg1)
-{
-    if(ui->cPlusPlus->isChecked()){
-        userFilters.cPlusPlus = 1;
-    }else{
-        userFilters.cPlusPlus = 0;
-    }
-}
-
-
-void MainWindow::on_python_stateChanged(int arg1)
-{
-    if(ui->python->isChecked()){
-        userFilters.python = 1;
-    }else{
-        userFilters.python = 0;
-    }
-}
-
-
-void MainWindow::on_txt_stateChanged(int arg1)
-{
-    if(ui->txt->isChecked()){
-        userFilters.txt = 1;
-    }else{
-        userFilters.txt = 0;
-    }
-}
-
 
 void MainWindow::on_searchBtn_clicked()
 {
-    if((engine.getDirPath() != "") && checkIncludeExcludeContradiction()){
+    if((engine.getDirPath() != "") ){
         engine.setKeyword(ui->keyword->text().toStdString());
+
+        // get user input for excluded extensions
+        QString userExcludedExt = ui->excludeExtensions->text();
+
+        // process the user input and convert it to vector<string>
+        userFilters.excludedExtensions = processExcludedExtensions(userExcludedExt);
+
         engine.setFilters(userFilters);
 
         if((ui->en_regex->isChecked() == 1) && (engine.validateRegex() == 0)){
@@ -156,64 +135,6 @@ void MainWindow::on_searchBtn_clicked()
     }
 }
 
-
-void MainWindow::on_exc_headerfile_stateChanged(int arg1)
-{
-    if(ui->exc_headerfile->isChecked()){
-        userFilters.exc_headerfile = 1;
-    }else{
-        userFilters.exc_headerfile = 0;
-    }
-}
-
-
-void MainWindow::on_exc_cPlusPlus_stateChanged(int arg1)
-{
-    if(ui->exc_cPlusPlus->isChecked()){
-        userFilters.exc_cPlusPlus= 1;
-    }else{
-        userFilters.exc_cPlusPlus = 0;
-    }
-}
-
-
-void MainWindow::on_exc_python_stateChanged(int arg1)
-{
-    if(ui->exc_python->isChecked()){
-        userFilters.exc_python= 1;
-    }else{
-        userFilters.exc_python= 0;
-    }
-}
-
-
-void MainWindow::on_exc_txt_stateChanged(int arg1)
-{
-    if(ui->exc_txt->isChecked()){
-        userFilters.exc_txt= 1;
-    }else{
-        userFilters.exc_txt= 0;
-    }
-}
-
-bool MainWindow::checkIncludeExcludeContradiction()
-{
-    bool res = true;
-    if(ui->headerfile->isChecked() && ui->exc_headerfile->isChecked()){
-        res = false;
-
-    }else if(ui->cPlusPlus->isChecked() && ui->exc_cPlusPlus->isChecked()){
-        res = false;
-
-    }else if(ui->python->isChecked() && ui->exc_python->isChecked()){
-        res = false;
-
-    }else if(ui->txt->isChecked() && ui->exc_txt->isChecked()){
-        res = false;
-    }
-
-    return res;
-}
 
 void MainWindow::on_en_regex_stateChanged(int arg1)
 {

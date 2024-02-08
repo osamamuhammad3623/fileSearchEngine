@@ -1,3 +1,7 @@
+#include <vector>
+#include <string>
+using namespace std;
+
 #ifndef ENGINEDEFINITIONS_H
 #define ENGINEDEFINITIONS_H
 
@@ -16,17 +20,8 @@ typedef struct{
     bool caseSensitive= false;
     bool recursive= false;
 
-    /* File Extensions */
-    bool headerfile= false;
-    bool cPlusPlus= false;
-    bool python= false;
-    bool txt= false;
-
     /* Excluded File Extensions */
-    bool exc_headerfile= false;
-    bool exc_cPlusPlus= false;
-    bool exc_python= false;
-    bool exc_txt= false;
+    vector<string> excludedExtensions{};
 
 }EngineSearchFilters;
 
