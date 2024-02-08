@@ -39,15 +39,7 @@ void FileSearchEngine::setFilters(EngineSearchFilters newFilters){
             newFilters.caseSensitive +
             newFilters.recursive +
 
-            newFilters.headerfile +
-            newFilters.cPlusPlus +
-            newFilters.python +
-            newFilters.txt +
-
-            newFilters.exc_headerfile +
-            newFilters.exc_cPlusPlus +
-            newFilters.exc_python +
-            newFilters.exc_txt +
+            newFilters.excludedExtensions.size() +
 
             newFilters.regex_enabled;
 
@@ -83,60 +75,41 @@ void FileSearchEngine::search(void){
             }
         }
 
-        excludeEntries(content);
-
         for(auto &entry: content){
             string entryFilename = entry.path().filename().u8string();
             string entryPath= entry.path().u8string();
             string entryExtension = entry.path().extension().u8string();
+            bool toBeSearched = true;
 
-            if((fs::is_directory(entry) == 1) && (filters.directoryName == 1)){
-
-                if(findKeyword(entryFilename)){
-                    result.push_back(make_tuple(entryFilename, "Directory name",entryPath));
+            for(auto &ext: filters.excludedExtensions){
+                if(entryExtension == ext){
+                    toBeSearched=false;
+                    break;
                 }
+            }
 
-            }else if (fs::is_regular_file(entry) == 1){
+            if(toBeSearched){
+                if((fs::is_directory(entry) == 1) && (filters.directoryName == 1)){
 
-                if(filters.fileName == 1){
                     if(findKeyword(entryFilename)){
-                        result.push_back(make_tuple(entryFilename, "File name",entryPath));
-                    }
-                }
-
-                if(filters.infile == 1){
-                    string data = readFile(entryPath);
-                    if(findKeyword(data)){
-                        result.push_back(make_tuple(entryFilename, "In-file search",entryPath));
-                    }
-                }
-
-                if((filters.headerfile == 1)  && (entryExtension == ".h")){
-                    if(findKeyword(entryFilename)){
-                        result.push_back(make_tuple(entryFilename, ".h extension",entryPath));
-                    }
-                }
-
-                if((filters.cPlusPlus == 1)   && ((entryExtension == ".cpp") || (entryExtension == ".c"))){
-                    if(findKeyword(entryFilename)){
-                        result.push_back(make_tuple(entryFilename, ".c/cpp extension",entryPath));
+                        result.push_back(make_tuple(entryFilename, "Directory name",entryPath));
                     }
 
-                }
+                }else if (fs::is_regular_file(entry) == 1){
 
-                if((filters.python == 1) && (entryExtension == ".py")){
-                    if(findKeyword(entryFilename)){
-                        result.push_back(make_tuple(entryFilename,".py extension", entryPath));
+                    if(filters.fileName == 1){
+                        if(findKeyword(entryFilename)){
+                            result.push_back(make_tuple(entryFilename, "File name",entryPath));
+                        }
                     }
 
-                }
-
-                if((filters.txt == 1) && (entryExtension == ".txt")){
-                    if(findKeyword(entryFilename)){
-                        result.push_back(make_tuple(entryFilename, ".txt extension",entryPath));
+                    if(filters.infile == 1){
+                        string data = readFile(entryPath);
+                        if(findKeyword(data)){
+                            result.push_back(make_tuple(entryFilename, "In-file search",entryPath));
+                        }
                     }
                 }
-
             }
         }
         status = Status_Search_Completed;
@@ -165,38 +138,6 @@ string FileSearchEngine::toLowerCase(string str){
     }
 
     return result;
-}
-
-void FileSearchEngine::excludeEntries(vector<fs::directory_entry> &entries)
-{
-    int toErase=0;
-    int entriesSize = entries.size();
-    for(int i =0; i< entriesSize -1;i++){
-        string extension = entries[i].path().extension().u8string();
-        if((extension == ".h")  && (filters.exc_headerfile == 1)){
-            entries[i] = entries[entriesSize-1 -toErase];
-            toErase++;
-        }
-
-        else if(((extension == ".c") || (extension == ".cpp")) && (filters.exc_cPlusPlus== 1)){
-            entries[i] = entries[entriesSize-1 -toErase];
-            toErase++;
-        }
-
-        else if((extension == ".py")  && (filters.exc_python== 1)){
-            entries[i] = entries[entriesSize-1 -toErase];
-            toErase++;
-        }
-
-        else if((extension == ".txt")  && (filters.exc_txt== 1)){
-            entries[i] = entries[entriesSize-1 -toErase];
-            toErase++;
-        }
-    }
-
-    vector<fs::directory_entry>::iterator iter = entries.begin() + (entriesSize-1 - toErase);
-
-    entries.erase(iter, entries.end());
 }
 
 bool FileSearchEngine::validateRegex(void)

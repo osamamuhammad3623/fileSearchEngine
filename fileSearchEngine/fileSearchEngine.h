@@ -50,8 +50,6 @@ public:
 
     string toLowerCase(string str);
 
-    void excludeEntries(vector<fs::directory_entry>& entries);
-
     bool validateRegex(void);
 };
 
